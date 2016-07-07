@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Expires" content="Fri, Jan 01 1900 00:00:00 GMT">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Cache-Control" content="no-cache">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Lang" content="en">
+<title>Find the Years Problem</title>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+<link rel="stylesheet" type="text/css" href="my.css">
+<script type="text/javascript">
+
+function getRange(numbers, theseed){ 
+    if(theseed === undefined){ 
+        theseed = 0; 
+    }
+    
+    return Array.apply(null, Array(numbers)).map(function (_, i) {return i + theseed;});
+}
+
+function areTheyAlive(theperson, year){ 
+    var alive = 0; 
+    if(theperson.birth <= year && theperson.death >= year){ 
+        alive = 1; 
+    }
+    
+    return alive; 
+}
+
+
+
+function peopleAlive(startYear){
+    
+    var years = getRange(101, startYear || 1900); 
+    
+    var peopleList = [
+        { 
+            'person': 'Bob',
+            'birth': 1945,
+            'death': 1986
+        },
+        { 
+            'person': 'Nancy',
+            'birth': 1908,
+            'death': 1968
+        },
+        { 
+            'person': 'Ric',
+            'birth': 1921,
+            'death': 1998
+        },
+        { 
+            'person': 'Roman',
+            'birth': 1928,
+            'death': 1999
+        },
+        { 
+            'person': 'Dora',
+            'birth': 1940,
+            'death': 1976
+        },
+        { 
+            'person': 'Mack',
+            'birth': 1935,
+            'death': 1988
+        }
+    ]; 
+    
+    return years.map(function(year) {
+        return {"year": year, "alive": peopleList.filter(function(person) {
+          return areTheyAlive(person, year);
+        }).length}
+    });
+    
+}
+
+var whoIsAlive = peopleAlive(); 
+var YearMostAlivePeople = whoIsAlive.reduce(function(carry, current){
+    if(current.alive > carry.alive){ 
+        return current; 
+    }    
+    
+    return carry; 
+}); 
+
+console.log(YearMostAlivePeople); 
+
+</script>
+</head>
+<body>
+  
+</body>
+</html>
